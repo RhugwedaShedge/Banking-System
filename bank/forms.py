@@ -6,11 +6,16 @@ from django.contrib.auth import models
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db import transaction
 
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    mobile_no = forms.IntegerField(max_value = 10)
+    mobile_no = forms.CharField()
+
+    # mobile_no = PhoneNumberField(
+    #     widget = PhoneNumberPrefixWidget(initial = 'IN')
+    # ) 
 
     account_no = forms.CharField()
     cif_no = forms.CharField()
@@ -37,6 +42,24 @@ class UserRegisterForm(UserCreationForm):
                     'focus:border-gray-500'
                 )
             })
+
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+            account_no = self.cleaned_data.get('account_no')
+            cif_no = self.cleaned_data.get('cif_no')
+            mobile_no = self.cleaned_data.get('mobile_no')
+
+            Customer.objects.create(
+                user = user,
+                account_no = account_no,
+                cif_no = cif_no,
+                mobile_no = mobile_no,
+            )
+        return user
     
     
 
