@@ -53,7 +53,7 @@ class UserRegisterForm(UserCreationForm):
             cif_no = self.cleaned_data.get('cif_no')
             mobile_no = self.cleaned_data.get('mobile_no')
 
-            Customer.objects.create(
+            UserBankAccount.objects.create(
                 user = user,
                 account_no = account_no,
                 cif_no = cif_no,
@@ -62,4 +62,26 @@ class UserRegisterForm(UserCreationForm):
         return user
     
     
+class TransactionForm(forms.ModelForm):
 
+    class Meta:
+        model = Transaction
+        fields = [
+            'userAccount', 
+            'payeeAccount', 
+            'amount',
+            'remark',
+            'transfer_type',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        self.account = kwargs.pop('account')
+        super().__init__(*args, **kwargs)
+
+        self.fields['transaction_type'].disabled = True
+        self.fields['transaction_type'].widget = forms.HiddenInput()
+
+    def save(self, commit=True):
+        self.instance.account = self.account
+        self.instance.balance_after_transaction = self.account.balance
+        return super().save()

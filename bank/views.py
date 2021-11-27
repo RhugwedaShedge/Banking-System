@@ -7,6 +7,8 @@ from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
+from rest_framework.decorators import api_view
+
 # Create your views here.
 
 def home(request):
@@ -18,7 +20,7 @@ def registerpage_view(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
-			form.save()
+			user = form.save()
 
 			username = form.cleaned_data.get('username')
 			# user = request.user
@@ -29,16 +31,15 @@ def registerpage_view(request):
 			# return redirect('/')
 
 
-			login(self.request, user)
+			login(request, user)
 			messages.success(
-				self.request,
+				request,
 				(
 					f'Thank You For Creating A Bank Account. '
-                    # f'Your Account Number is {user}. '
 				)
 			)
 			return HttpResponseRedirect(
-				reverse_lazy('transactions:deposit_money')
+				reverse_lazy('home-page')
 			)
 
 
@@ -60,3 +61,7 @@ class LogoutView(RedirectView):
         if self.request.user.is_authenticated:
             logout(self.request)
         return super().get_redirect_url(*args, **kwargs)
+
+
+# @api_view(['POST'])
+# def send_otp(request):
