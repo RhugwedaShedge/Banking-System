@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'i=dd_k8(fe7+4k=@22utjtg&n=javznxovotep#3eli697amqk'
+# API_KEY = 'f35586f7-51d5-11ec-b710-0200cd936042'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
