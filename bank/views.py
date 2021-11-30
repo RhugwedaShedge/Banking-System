@@ -1,3 +1,4 @@
+# from _typeshed import Self
 from django.shortcuts import render
 from .forms import UserRegisterForm, TransactionForm
 from .models import *
@@ -25,6 +26,11 @@ def registerpage_view(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
+			form.save()
+
+			username = form.cleaned_data.get('username')
+			
+
 			user = form.save()
 			
 			# username = form.cleaned_data.get('username')
@@ -36,6 +42,7 @@ def registerpage_view(request):
 			# messages.success(request, f'Account has been created! You can now login.')
 			# return redirect('/')			
 
+
 			login(request, user)
 
 			user = UserBankAccount.objects.get(user = request.user)
@@ -44,6 +51,16 @@ def registerpage_view(request):
 			user.otp = send_otp_to_phone(mobile_no)
 			print("user.otp: ", user.otp)
 			user.save()
+
+
+			login(self.request)
+			messages.success(
+				self.request,
+				(
+					f'Thank You Linking a bank account. '
+                    
+				)
+			)
 
 			return HttpResponseRedirect(
 				reverse_lazy('verify-otp')
