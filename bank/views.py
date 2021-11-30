@@ -1,3 +1,4 @@
+# from _typeshed import Self
 from django.shortcuts import render
 from .forms import UserRegisterForm
 from django.contrib import messages
@@ -21,20 +22,15 @@ def registerpage_view(request):
 			form.save()
 
 			username = form.cleaned_data.get('username')
-			# user = request.user
-			# print(user)
-			# customer = Customer.objects.create(user = username.id)
-			# print(customer)
-			# messages.success(request, f'Account has been created! You can now login.')
-			# return redirect('/')
+			
 
 
-			login(self.request, user)
+			login(self.request)
 			messages.success(
 				self.request,
 				(
-					f'Thank You For Creating A Bank Account. '
-                    # f'Your Account Number is {user}. '
+					f'Thank You Linking a bank account. '
+                    
 				)
 			)
 			return HttpResponseRedirect(
