@@ -73,15 +73,6 @@ class TransactionForm(forms.ModelForm):
             'transfer_type',
         ]
 
+class OTPForm(forms.Form):
+    verifyOTP = forms.CharField(max_length=6)
 
-    # def __init__(self, *args, **kwargs):
-    #     self.account = kwargs.pop('account')
-    #     super().__init__(*args, **kwargs)
-
-    #     self.fields['transfer_type'].disabled = True
-    #     self.fields['transfer_type'].widget = forms.HiddenInput()
-
-    # def save(self, commit=True):
-    #     self.instance.account = self.account
-    #     self.instance.balance_after_transaction = self.account.balance
-    #     return super().save()
