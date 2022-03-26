@@ -20,6 +20,7 @@
         {{ hidden_field.errors }}
         {{ hidden_field }}
         {% endfor %}
+
         {% for field in form.visible_fields %}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
