@@ -139,7 +139,7 @@ def TransactionView(request):
 				user.balance -= amount
 
 				payeeAccount = form.cleaned_data.get('payeeAccount')
-				payeeuser = UserBankAccount.objects.filter(account_no = payeeAccount)
+				payeeuser = UserBankAccount.objects.get(account_no = payeeAccount)
 				payeeuser.balance += amount
 				payeeuser.save()
 				user.save()

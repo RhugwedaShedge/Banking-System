@@ -11,6 +11,13 @@
         </title>
         <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-uiauth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/fire
+        basejs/ui/4.6.1/firebase-ui-auth.css" />
+        <link rel="stylesheet" href="/static/js/script.js">
+
         {% block head_extra %}{% endblock %}
     </head>
     <body class="bg-gray-100">
@@ -26,5 +33,9 @@
 
         {% endblock %}
         {% block footer_extra %}{% endblock %}
+
+
+        <div id="firebaseui-auth-container"></div>
+
     </body>
 </html>
